@@ -24,6 +24,9 @@ class JoiningParser(ABC):
             return []
         return self._parse_response(response.text)
 
+    def get_last_news(self) -> list[dict]:
+        raise NotImplementedError("This method should be implemented in subclasses")
+
     def _parse_response(self, response_text: str) -> list[News]:
         titles = []
         for title_item in self._get_title_items(response_text):
