@@ -1,9 +1,9 @@
 from loguru import logger
 
 from django.conf import settings
-from tg_bot.database.base import Base  # какую передавать сюда базу??
 from news.models import News, NewsSource
 from joining_parser import JoiningParser
+from parser.mundodeportivo import MundoDeportivoParser
 from sport_express import SportExpressParser
 
 # SECONDS_TO_REFRESH_NEWS = 60.0
@@ -11,12 +11,12 @@ from sport_express import SportExpressParser
 settings.configure()
 
 
-def get_title_news(parsers: list[JoiningParser]) -> list[News]:
+def get_last_news(parsers: list[JoiningParser]) -> list[News]:
     """Loads news from all sources."""
-    all_news_titles = []
+    all_news = []
     for parser in parsers:
-        all_news_titles += parser.get_titles_news()
-    return all_news_titles
+        all_news += parser.get_last_news()
+    return all_news
 
 
 if __name__ == '__main__':
@@ -24,11 +24,12 @@ if __name__ == '__main__':
     logger.info('Application is started.')
 
     news_sources: list[NewsSource] = [
-        SportExpressParser(),  # TODO передать MundoDeportivoParser
+        SportExpressParser(),
+        MundoDeportivoParser()
         ]
 
-    database = Base()  # какую базу вызывать??
-    database.insert_news_sources(news_sources)
+    # database = NewsSource.objects.create()
+    # database.insert_news_sources(news_sources)
 
     # while True:
     #     titles = get_title_news(news_sources)
