@@ -102,11 +102,20 @@ DATABASES = {
         'PORT': os.getenv('PG_PORT'),
     }
 }
+REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_PORT = os.getenv("REDIS_PORT")
+REDIS_USER = os.getenv("REDIS_USER")
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD")
+
+if REDIS_USER and REDIS_PASSWORD:
+    REDIS_AUTH = f"{REDIS_USER}:{REDIS_PASSWORD}@"
+else:
+    REDIS_AUTH = ""
 
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": f"redis://{REDIS_AUTH}{REDIS_HOST}:{REDIS_PORT}",
         "TIMEOUT": 300,
         "KEY_PREFIX": "",
         "OPTIONS": {
