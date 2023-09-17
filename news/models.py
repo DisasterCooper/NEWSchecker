@@ -20,7 +20,7 @@ class News(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     link = models.URLField()
-    published = models.DateTimeField(auto_now_add=True)
+    published = models.DateTimeField()
     source = models.ForeignKey(NewsSource, on_delete=models.CASCADE, related_name="news")
 
     class Meta:
