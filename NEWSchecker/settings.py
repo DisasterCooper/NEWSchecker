@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'news.apps.NewsConfig',
     'parser',
     'rest_framework',
+    'celery',
 ]
 
 if DEBUG:
@@ -165,3 +166,22 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/7"
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+
+from celery.schedules import crontab
+
+CELERY_TASK_ROUTES = {
+    "news.tasks.parse_sports_express": {
+        "task": "parse_news",
+        "queue": "sport_express"
+    }
+}
+CELERY_BEAT_SCHEDULE = {
+    "parse_news_every_hour": {
+        "task": "news.tasks.parse_sports_express",
+        "schedule": crontab(minute=0, hour='*/3'),
+        "args": ('arg1', 2, 'arg3')
+    }
+}
