@@ -23,6 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
+TG_TOKEN = os.getenv("TG_TOKEN")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG: bool = os.getenv("DJANGO_DEBUG", "0") == "1"
 
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'celery',
     'users',
+    'tg_bot',
 ]
 
 if DEBUG:
@@ -106,6 +109,8 @@ DATABASES = {
         'PORT': os.getenv('PG_PORT'),
     }
 }
+DATABASE_URL = os.getenv("DATABASE_URL")  # TODO добавить
+
 REDIS_HOST = os.getenv("REDIS_HOST")
 REDIS_PORT = os.getenv("REDIS_PORT")
 REDIS_USER = os.getenv("REDIS_USER")
