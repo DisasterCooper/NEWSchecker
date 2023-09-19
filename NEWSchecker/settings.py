@@ -33,6 +33,8 @@ if DEBUG:
         "127.0.0.1",
     ]
 
+AUTH_USER_MODEL = "users.User"
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'parser',
     'rest_framework',
     'celery',
+    'users',
 ]
 
 if DEBUG:

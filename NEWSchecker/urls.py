@@ -21,6 +21,7 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("news/", include(('news.urls', 'news'), namespace='news')),
+    # path("users/", include(('users.urls', 'users'), namespace='users')),
     path("api/", include("news.api.urls"))
 ]
 
