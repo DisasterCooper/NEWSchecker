@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from news.views import NewsList
+from users.views import Registration
 
 urlpatterns = [
+    path('', NewsList.as_view()),
     path("admin/", admin.site.urls),
     path("news/", include(('news.urls', 'news'), namespace='news')),
     path("users/", include(('users.urls', 'users'), namespace='users')),

@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'celery',
     'users',
     'tg_bot',
+    'crispy_forms',
+    'crispy_bootstrap5',
+
 ]
 
 if DEBUG:
@@ -195,3 +198,7 @@ CELERY_BEAT_SCHEDULE = {
         "args": ('arg1', 2, 'arg3')
     }
 }
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
