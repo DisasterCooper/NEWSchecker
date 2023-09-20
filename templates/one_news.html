@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% load crispy_forms_tags %}
+
+    <div class="container w-50">
+        <div class="se-material__title">
+            <h2>
+                {{ one_news.title }}
+            </h2>
+
+            <span style="border-radius: 15px; background-color: #a2a8d9; color: white; padding: 5px">
+                {{ one_news.published }}
+            </span>
+
+            <div style="margin: 10px">
+                {{ one_news.content | safe }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

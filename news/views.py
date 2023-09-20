@@ -20,3 +20,8 @@ class NewsList(generic.View):
         return render(request, "home.html", {"news": news})
 
 
+class ShowOneNews(generic.DetailView):
+    queryset = News.objects  # Откуда вытянуть
+    pk_url_kwarg = "news_id"  # Где взять id объекта в URL?
+    template_name = "one_news.html"  # Шаблон, куда вернуть
+    context_object_name = "one_news"  # Под каким именем вернуть в этот шаблон
