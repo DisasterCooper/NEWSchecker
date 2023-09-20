@@ -3,6 +3,13 @@
         <div class="d-flex justify-content-center py-3">
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{% url 'news:home' %}" class="nav-link px-2">Home</a></li>
+
+                     <a href="{% url 'accounts:login'%}">
+                         <button type="button" class="btn btn-primary me-2">Login</button>
+                     </a>
+                     <a href="{% url 'registration' %}">
+                         <button type="button" class="btn btn-outline-primary">Registration</button>
+                     </a>
             </ul>
         </div>
     </div>

@@ -21,7 +21,9 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("news/", include(('news.urls', 'news'), namespace='news')),
-    # path("users/", include(('users.urls', 'users'), namespace='users')),
+    path("users/", include(('users.urls', 'users'), namespace='users')),
+    path('accounts/', include(('django.contrib.auth.urls', 'django.contrib.auth'), namespace='accounts')),
+    path("accounts/registration", Registration.as_view(), name='registration'),
     path("api/", include("news.api.urls"))
 ]
 
