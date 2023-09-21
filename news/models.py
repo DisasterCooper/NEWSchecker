@@ -22,7 +22,6 @@ class News(models.Model):
     link = models.URLField()
     published = models.DateTimeField()
     source = models.ForeignKey(NewsSource, on_delete=models.CASCADE, related_name="news")
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="news")
 
     class Meta:
         db_table = "news"

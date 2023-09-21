@@ -12,10 +12,8 @@ class NewsAdmin(admin.ModelAdmin):
                     "content",
                     "link",
                     "published",
-                    "user",
                     ]
     search_fields = ["title", "content"]
-    list_filter = ["user"]
 
     @admin.display(description="Title")
     def _title(self, obj: News):
