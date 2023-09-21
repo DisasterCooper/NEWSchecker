@@ -54,8 +54,7 @@ class News(Base):
     content = Column(Text(), nullable=False)
     link = Column(String(200), nullable=False)
     published = Column(DateTime())
-    source_id = Column(ForeignKey("news_sources.id_name", ondelete="CASCADE", nullable=False))
-    user_id = Column(ForeignKey("users.id_name", ondelete="CASCADE", nullable=False))
+    source_id = Column(ForeignKey("news_sources.id", ondelete="CASCADE"))
 
     @classmethod
     async def get_all(cls):

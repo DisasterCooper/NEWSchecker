@@ -14,7 +14,7 @@ class AsyncDatabaseConnection:
 
     def init(self):
         self._engine = create_async_engine(
-            url="postgresql:///checker:password@localhost/checker_db",  # TODO заменить на os.environ.get('DATABASE_URL')
+            url="postgresql+asyncpg:///checker:password@localhost/checker_db",  # TODO заменить на os.environ.get('DATABASE_URL')
         )
         self._session = AsyncSession(self._engine)
 
