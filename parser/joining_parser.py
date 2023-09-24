@@ -19,10 +19,6 @@ class JoiningParser(ABC):
     Abstract class for all sources of news.
     """
 
-    def __init__(self):
-        self.title = self._get_title()
-        self.content = self._get_content()
-
     @abstractmethod
     def get_last_news(self, from_datetime: datetime) -> list[NewsType]:
         """

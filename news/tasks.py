@@ -7,7 +7,7 @@ from news.models import NewsSource, News
 from parser.sport_express import SportExpressParser
 
 
-@shared_task(name="parse_sports_express")
+@shared_task()
 def parse_sports_express():
     """
     Task for the site `www.sport-express.ru`.

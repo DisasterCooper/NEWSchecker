@@ -3,13 +3,11 @@ from django.db import models
 
 class NewsSource(models.Model):
 
-    id_name = models.IntegerField(primary_key=True)
     source = models.CharField(max_length=200)
     link = models.URLField()
 
     class Meta:
         db_table = "news_sources"
-        ordering = ["id_name"]
 
     def __str__(self):
         return self.source

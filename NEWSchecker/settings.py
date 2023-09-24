@@ -187,16 +187,21 @@ from celery.schedules import crontab
 
 CELERY_TASK_ROUTES = {
     "news.tasks.parse_sports_express": {
-        "task": "parse_news",
+        "task": "news.tasks.parse_sports_express",
         "queue": "sport_express"
     }
 }
 CELERY_BEAT_SCHEDULE = {
-    "parse_news_every_hour": {
-        "task": "news.tasks.parse_sports_express",
-        "schedule": crontab(minute=0, hour='*/3'),
-        "args": ('arg1', 2, 'arg3')
-    }
+    # "parse_news_every_hour": {
+    #     "task": "news.tasks.parse_sports_express",
+    #     "schedule": crontab(minute=0, hour='*/3'),
+    #     "args": ('arg1', 2, 'arg3')
+    # }
+    "every_minute":
+        {
+            "task": "news.tasks.parse_sports_express",
+            "schedule": crontab(minute='*/1')
+        }
 }
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
