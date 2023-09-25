@@ -1,6 +1,9 @@
 import asyncio
 import logging
 import os
+import re
+
+from bs4 import BeautifulSoup
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
@@ -19,7 +22,7 @@ dp = Dispatcher()
 
 
 # Хэндлер на команду /start
-@dp.message(Command('start'))
+@dp.message(Command("start"))
 async def cmd_start(message: types.Message):
     text = "Привет! Я бот для отправки спортивных новостей о чемпионате Испании." \
            "Список доступных команд:" \
@@ -30,14 +33,21 @@ async def cmd_start(message: types.Message):
     await message.answer(text)
 
 
+def remove_html_tags_content(text: str) -> str:
+    bs = BeautifulSoup(text, "lxml")
+    return re.sub(r"\s{2}", '', bs.get_text())
+
+
 @dp.message(Command("news"))
 async def cmd_get_news(message: types.Message):
 
     all_news = await News.get_all()
+    last_five_news = all_news[-5:]
     answer_text = ""
 
-    for news in all_news:
-        answer_text += f"<a href=\"http://127.0.0.1:8000/news/{news.id}\">{news.title}</a>\n{news.content}\n\n"
+    for news in last_five_news:
+        content = remove_html_tags_content(news.content)
+        answer_text += f"<a href=\"http://127.0.0.1:8000/news/{news.id}\">{news.title}</a>\n{content}\n\n"
 
     await message.answer(answer_text, parse_mode="html")
     # await message.answer("Your fresh news!")
