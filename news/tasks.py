@@ -3,7 +3,7 @@ from datetime import datetime
 from celery.app import shared_task
 
 from news.models import NewsSource, News
-# from chatgpt.translators import Translator
+from chatgpt.translator import Translator
 from parser.sport_express import SportExpressParser
 
 
@@ -35,8 +35,8 @@ def parse_sports_express():
 
     for one_news in all_news:
         # Translator
-        # one_news["title"] = Translator(one_news["title"]).to_rus()
-        # one_news["content"] = Translator(one_news["content"]).to_rus()
+        one_news["title"] = Translator(one_news["title"]).to_eng()
+        one_news["content"] = Translator(one_news["content"]).to_eng()
 
         # NewsType содержит такие же поля, как и модель News =>
         # распаковка словаря через **
