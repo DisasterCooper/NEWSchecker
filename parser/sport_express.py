@@ -43,7 +43,7 @@ class SportExpressParser(JoiningParser):
         news_soup = BeautifulSoup(response.text, "lxml")
 
         published_datetime = self._get_published(news_soup)
-        if published_datetime <= from_datetime:
+        if published_datetime.timestamp() <= from_datetime.timestamp():
             return
 
         # Проверить, что есть содержимое и можно добавлять новость

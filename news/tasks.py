@@ -16,7 +16,9 @@ def parse_sports_express():
     # Второй параметр `_` => возвращает `True` или `False` не нужен => поэтому просто `_`
     source, _ = NewsSource.objects.get_or_create(
         source="sport-express.ru",
-        link="https://www.sport-express.ru/football/spain/",
+        defaults={
+            "link": "https://www.sport-express.ru/football/spain/",
+        },
     )
 
     # Получение `datetime` последней новости для данного источника
