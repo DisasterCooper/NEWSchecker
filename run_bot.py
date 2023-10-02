@@ -21,15 +21,15 @@ bot = Bot(token=os.getenv("TG_TOKEN"))
 dp = Dispatcher()
 
 
-# Хэндлер на команду /start
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
-    text = "Привет! Я бот для отправки спортивных новостей о чемпионате Испании." \
-           "Список доступных команд:" \
-           "\n/start - начать работу" \
-           "\n/news - получить топ новостей" \
-           "\n/status - посмотреть статистику своего профиля" \
-           "\n/help - список команд"
+    text = "Привет! Я помогу узнать спортивные новости о чемпионате Испании." \
+           "Список команд:" \
+           "\n/start - start" \
+           "\n/news - последние новости" \
+           "\n/titles - заголовки новостей" \
+           "\n/status - статистика профиля" \
+           "\n/help - поддержка"
     await message.answer(text)
 
 
@@ -38,19 +38,31 @@ def remove_html_tags_content(text: str) -> str:
     return re.sub(r"\s{2}", '', bs.get_text())
 
 
-@dp.message(Command("news"))
-async def cmd_get_news(message: types.Message):
+@dp.message(Command("titles"))
+async def cmd_get_titles(message: types.Message):
 
-    all_news = await News.get_all()
-    last_five_news = all_news[-5:]
+    titles = await News.get_titles()
     answer_text = ""
 
-    for news in last_five_news:
-        content = remove_html_tags_content(news.content)
-        answer_text += f"<a href=\"http://127.0.0.1:8000/news/{news.id}\">{news.title}</a>\n{content}\n\n"
+    for news in titles:
+        answer_text += f"<a href=\"https://{os.getenv('PG_HOST')}:{os.getenv('PG_PORT')}/news/" \
+                       f"{news.id}\">{news.title}</a>\n{news.published}\n\n"
 
     await message.answer(answer_text, parse_mode="html")
-    # await message.answer("Your fresh news!")
+
+
+@dp.message(Command("news"))
+async def cmd_get_last(message: types.Message):
+
+    last_news = await News.get_last()
+    answer_text = ""
+
+    for news in last_news:
+        content = remove_html_tags_content(news.content)
+        answer_text += f"<a href=\"https://{os.getenv('PG_HOST')}:{os.getenv('PG_PORT')}/news/" \
+                       f"{news.id}\">{news.title}</a>\n{content}\n\n"
+
+    await message.answer(answer_text, parse_mode="html")
 
 
 @dp.message(Command("status"))

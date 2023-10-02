@@ -61,3 +61,21 @@ class News(Base):
         async with db.session as session:
             result = await session.execute(select(cls))
             return result.scalars().all()
+
+    @classmethod
+    async def get_last(cls):
+        async with db.session as session:
+            result = await session.execute(select(cls).order_by(News.id.desc()).limit(limit=5))
+            # fresh_news не больше 4096 символов
+            fresh_news = result.scalars().all()
+            for i, content in enumerate(fresh_news):
+                if len(content.content) > 4096:
+                    fresh_news = fresh_news[:i] + fresh_news[i + 1:]
+                    break
+            return fresh_news
+
+    @classmethod
+    async def get_titles(cls):
+        async with db.session as session:
+            result = await session.execute(select(cls).limit(limit=5).order_by(News.id.desc()))
+            return result.scalars().all()
