@@ -200,7 +200,11 @@ CELERY_TASK_ROUTES = {
     "news.tasks.parse_sports_express": {
         "task": "news.tasks.parse_sports_express",
         "queue": "sport_express"
-    }
+    },
+    "news.tasks.parse_mundodeportivo": {
+        "task": "news.tasks.parse_mundodeportivo",
+        "queue": "mundodeportivo"
+    },
 }
 CELERY_BEAT_SCHEDULE = {
     # "parse_news_every_hour": {
@@ -212,7 +216,13 @@ CELERY_BEAT_SCHEDULE = {
         {
             "task": "news.tasks.parse_sports_express",
             "schedule": crontab(minute='*/1')
-        }
+        },
+
+    "every_minute_mundo":
+        {
+            "task": "news.tasks.parse_mundodeportivo",
+            "schedule": crontab(minute='*/1')
+        },
 }
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
